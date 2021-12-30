@@ -1,0 +1,11 @@
+Attempt at Simplification:
+(a and not(b) and not(sel)) or (a and b and not(sel)) or (a and not(b) and sel) or (a and b and sel)
+((a and not(sel)) and (b or not(b))) or ((a and sel) and (not(b) or b))
+(a and not(sel)) or (a and sel)
+a and (sel or not(sel))
+a and 1
+
+
+Attempt at Logical Reasoning:
+
+(not(sel) and a) or (b and sel)

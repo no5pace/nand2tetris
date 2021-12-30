@@ -1,0 +1,7 @@
+[not(x) and not(y) and not(z)] or [not(x) and y and not(z)] or [x and not(y) and not(z)]
+{[not(x) and not(z)] and not(y)} or {[not(x) and not(z)] and y} or [x and not(y) and not(z)]
+{[not(x) and not(z)] and [not(y) or y]} or [x and not(y) and not(z)]
+[not(x) and not(z)] or [x and not(y) and not(z)]
+not(z) and [not(x) or (x and not(y)]
+not(z) and {[not(x) or x] and [not(x) or not(y)]}
+not(z) and [not(x) or not(y)]
