@@ -42,5 +42,27 @@ CHIP ALU {
         ng; // 1 if (out < 0),  0 otherwise
 
     PARTS:
-   // Put you code here:
+	/* transformation control bits */
+	Zer16(in=x, out=x0);
+	Not16(in=x, out=Notx);
+	Not16(in=x0, out=Notx0);
+	Mux4Way16(a=x, b=x0, c=Notx, d=Notx0, sel[0]=zx, sel[1]=nx, out=modx);
+
+	Zer16(in=y, out=y0);
+	Not16(in=y, out=Noty);
+	Not16(in=y0, out=Noty0);
+	Mux4Way16(a=y, b=y0, c=Noty, d=Noty0, sel[0]=zy, sel[1]=ny, out=mody);
+
+	/* function control bits + ng and out logic */
+	Add16(a=modx, b=mody, out=xAddy);
+	And16(a=modx, b=mody, out=xAndy);
+
+	Not16(in=xAddy, out=NotxAddy);
+	Not16(in=xAndy, out=NotxAndy);
+
+	Mux4Way16(a=xAndy, b=xAddy, c=NotxAndy, d=NotxAddy, sel[0]=f, sel[1]=no, out[15]=ng, out=output, out=out);
+
+	/* zr logic */
+	Or16Way(in=output, out=present);
+	Not(in=present, out=zr);
 }
