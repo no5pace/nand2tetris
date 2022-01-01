@@ -1,0 +1,22 @@
+CHIP Mem16Bit {
+	IN in[16], load;
+	OUT out[16];
+
+	PARTS:
+	Mem1Bit(in=in[0], load=load, out=out[0]);
+	Mem1Bit(in=in[1], load=load, out=out[1]);
+	Mem1Bit(in=in[2], load=load, out=out[2]);
+	Mem1Bit(in=in[3], load=load, out=out[3]);
+	Mem1Bit(in=in[4], load=load, out=out[4]);
+	Mem1Bit(in=in[5], load=load, out=out[5]);
+	Mem1Bit(in=in[6], load=load, out=out[6]);
+	Mem1Bit(in=in[7], load=load, out=out[7]);
+	Mem1Bit(in=in[8], load=load, out=out[8]);
+	Mem1Bit(in=in[9], load=load, out=out[9]);
+	Mem1Bit(in=in[10], load=load, out=out[10]);
+	Mem1Bit(in=in[11], load=load, out=out[11]);
+	Mem1Bit(in=in[12], load=load, out=out[12]);
+	Mem1Bit(in=in[13], load=load, out=out[13]);
+	Mem1Bit(in=in[14], load=load, out=out[14]);
+	Mem1Bit(in=in[15], load=load, out=out[15]);
+}

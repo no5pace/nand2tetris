@@ -1,0 +1,8 @@
+CHIP Mem1Bit {
+	IN in, load;
+	OUT out;
+
+	PARTS:
+	Mux(a=old, b=in, sel=load, out=data);
+	DFF(in=data, out=old, out=out);
+}

@@ -1,0 +1,19 @@
+CHIP RAM8 {
+	IN in[16], address[3], load;
+	OUT out[16];
+
+	PARTS:
+	/* Read */
+	Mux8Way16(a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h, sel=address, out=out);
+
+	/* Write */
+	DMux8Way(in=load, sel=address, a=aLoad, b=bLoad, c=cLoad, d=dLoad, e=eLoad, f=fLoad, g=gLoad, h=hLoad);
+	Mem16Bit(in=in, load=aLoad, out=a);
+	Mem16Bit(in=in, load=bLoad, out=b);
+	Mem16Bit(in=in, load=cLoad, out=c);
+	Mem16Bit(in=in, load=dLoad, out=d);
+	Mem16Bit(in=in, load=eLoad, out=e);
+	Mem16Bit(in=in, load=fLoad, out=f);
+	Mem16Bit(in=in, load=gLoad, out=g);
+	Mem16Bit(in=in, load=hLoad, out=h);
+}
