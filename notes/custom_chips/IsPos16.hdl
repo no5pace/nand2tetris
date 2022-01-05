@@ -1,0 +1,10 @@
+CHIP IsPos16 {
+	IN in[16];
+	OUT out;
+
+	PARTS:
+	And(a=in[15], b=true, out=neg);
+	IsZer16(in=in, out=zer);
+	Or(a=neg, b=zer, out=or);
+	Not(in=or, out=out);
+}
