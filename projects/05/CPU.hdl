@@ -39,5 +39,39 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+	/* store output into A Register, D Register, or M (RAM[A]) RESPECTIVELY */
+	/* Mux between possible inputs and load bits if the instruction is a or c */
+	And(a=instruction[15], b=instruction[5], out=CA);
+	Not(in=instruction[15], out=not15);
+	Mux(a=not15, b=CA, sel=instruction[15], out=load);
+	Mux16(a=instruction, b=output, sel=instruction[15], out=in);
+	ARegister(in=in, load=load, out=A, out[0..14]=addressM); /* A Register */
+
+	And(a=instruction[15], b=instruction[4], out=CD);
+	DRegister(in=output, load=CD, out=D); /* D Register */
+
+	/* IF C INSTRUCTION */
+	/* generate outputs for each possible calculation -> Mux16 based on a bit */
+	ALU(x=D, y=inM, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=DMresult, zr=DMresultZR, ng=DMresultNG);
+	ALU(x=D, y=A, zx=instruction[11], nx=instruction[10], zy=instruction[9], ny=instruction[8], f=instruction[7], no=instruction[6], out=DAresult, zr=DAresultZR, ng=DAresultNG);
+	Mux16(a=DAresult, b=DMresult, sel=instruction[12], out=output, out=outM);
+	/* idk what to do with these */
+	Mux(a=DAresultZR, b=DMresultZR, sel=instruction[12], out=outZR);
+	Mux(a=DAresultNG, b=DMresultNG, sel=instruction[12], out=outNG);
+
+	/* writeM */
+	And(a=instruction[3], b=instruction[15], out=writeM);
+	
+	/* pc from jump bits */
+	IsNeg16(in=output, out=JLT);
+	IsZer16(in=output, out=JEQ);
+	IsPos16(in=output, out=JGT);
+	And(a=instruction[2], b=JLT, out=a);
+	And(a=instruction[1], b=JEQ, out=b);
+	And(a=instruction[0], b=JGT, out=c);
+	Or(a=a, b=b, out=ab);
+	Or(a=ab, b=c, out=j);
+	And(a=instruction[15], b=j, out=jump);
+	Not(in=jump, out=inc);
+	PC(in=A, load=jump, inc=inc, reset=reset, out=prev, out[0..14]=pc);
 }
